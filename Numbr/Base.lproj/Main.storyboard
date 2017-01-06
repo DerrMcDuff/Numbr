@@ -65,6 +65,7 @@
                                             <connections>
                                                 <action selector="editingDidEnd:" destination="wWX-Rd-SfY" eventType="editingDidEnd" id="FMR-OX-Mqg"/>
                                                 <action selector="reloadData:" destination="U71-LM-eyV" eventType="primaryActionTriggered" id="0rJ-cP-4E5"/>
+                                                <action selector="reloadDataTap:" destination="U71-LM-eyV" eventType="editingDidEnd" id="2lv-6D-ggO"/>
                                             </connections>
                                         </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="07w-ZE-GPO">

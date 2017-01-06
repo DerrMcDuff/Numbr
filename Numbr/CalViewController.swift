@@ -43,15 +43,26 @@ class CalViewController: UITableViewController, UITextFieldDelegate {
         return cell
     }
     @IBAction func reloadData(_ sender: UITextField) {
+        reloadDataAlgo(sender, "noTap")
+    }
+    
+    @IBAction func reloadDataTap(_ sender: UITextField) {
+        reloadDataAlgo(sender, "tap")
+    }
+    
+    func reloadDataAlgo(_ sender: UITextField, _ context: String) {
         let tar = sender.superview?.superview as? LineOfCode
         tar?.lineManaging()
-
         self.tableView.reloadData()
-        let ii:Int = tar!.indexProp+1
-        print(ii)
-        let i:IndexPath = IndexPath(row: ii, section: 0)
-        (tableView.cellForRow(at: i) as! LineOfCode).lineContent.becomeFirstResponder()
         
+        // No need to change First Responder when tap
+        if context == "noTap" {
+            let ii:Int = tar!.indexProp+1
+            print(ii)
+            let i:IndexPath = IndexPath(row: ii, section: 0)
+            (tableView.cellForRow(at: i) as! LineOfCode).lineContent.becomeFirstResponder()
+        }
     }
+    
     
 }

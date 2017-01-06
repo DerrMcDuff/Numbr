@@ -22,22 +22,19 @@ class Line {
     
     func fill(_ content:String) {
         
-        let cNS = String(content.characters.filter({$0 != " "}))
-        // TODO: This
-//        if cNS != ""{
-//            switch true {
-//            case cNS.contains("="):
-//                equal(cNS)
-//            case cNS.contains("="):
-//                
-//            default:
-//                <#code#>
-//            }
-//        }
-        let s = NSExpression(format: content)
-        let sq = s.expressionValue(with: nil, context: nil)
-        let uw = sq as! Double
-        self.answer = "\(uw)"
+        //TODO: Real algo
+        
+        
+        // Placeholder algo using NSExpression
+        if content != "" {
+            let s = NSExpression(format: content)
+            let sq = s.expressionValue(with: nil, context: nil)
+            let uw = sq as! Double
+            self.answer = "\(uw)"
+        } else {
+            self.answer = ""
+        }
+        
     }
     func getContent()->String {
         return content
@@ -50,13 +47,6 @@ class Line {
     }
     func getAnswer()->String {
         return answer
-    }
-    
-    func equal(_ rawEq:String) {
-        
-        
-        let trans = rawEq.components(separatedBy: "=")
-        
     }
     
 }
