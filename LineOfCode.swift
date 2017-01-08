@@ -17,13 +17,13 @@ class LineOfCode: UITableViewCell, UITextFieldDelegate {
     
     var indexProp:Int = 0
     
-    
-    @IBAction func editingDidEnd(_ sender: Any) {
+    @IBAction func unselected(_ sender: UITextField) {
         let i = Int(lineIndex.text!)
         let c = lineContent.text
         data.nowBlock.setLineCon(at: i!, with: c!)
         data.nowBlock.setLineAns(at: i!, with: c!)
     }
+    
     
     func lineManaging() {
         let i = Int(lineIndex.text!)
@@ -34,7 +34,6 @@ class LineOfCode: UITableViewCell, UITextFieldDelegate {
         if (i == data.nowBlock.getNumberOfLines()-1) {
             data.nowBlock.newLine()
         }
-
     }
     
 }

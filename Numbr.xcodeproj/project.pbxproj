@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F0150791E21EACE00217512 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0150781E21EACE00217512 /* SettingsView.swift */; };
 		4FF492C41E1593D3005C6A2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF492C31E1593D3005C6A2A /* AppDelegate.swift */; };
 		4FF492C61E1593D3005C6A2A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF492C51E1593D3005C6A2A /* ViewController.swift */; };
 		4FF492C91E1593D3005C6A2A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FF492C71E1593D3005C6A2A /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F0150781E21EACE00217512 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4FF492C01E1593D3005C6A2A /* Numbr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Numbr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF492C31E1593D3005C6A2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FF492C51E1593D3005C6A2A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				4FF492C31E1593D3005C6A2A /* AppDelegate.swift */,
 				4FF492C51E1593D3005C6A2A /* ViewController.swift */,
 				4FF492C71E1593D3005C6A2A /* Main.storyboard */,
+				4F0150781E21EACE00217512 /* SettingsView.swift */,
 				4FF492CA1E1593D3005C6A2A /* Assets.xcassets */,
 				4FF492CC1E1593D3005C6A2A /* LaunchScreen.storyboard */,
 				4FF492CF1E1593D3005C6A2A /* Info.plist */,
@@ -153,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FF492DA1E15A794005C6A2A /* CalViewController.swift in Sources */,
+				4F0150791E21EACE00217512 /* SettingsView.swift in Sources */,
 				4FF492D61E1598D0005C6A2A /* Line.swift in Sources */,
 				4FF492D81E159ACB005C6A2A /* Block.swift in Sources */,
 				4FF492C61E1593D3005C6A2A /* ViewController.swift in Sources */,
@@ -320,6 +324,7 @@
 				4FF492D41E1593D3005C6A2A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
