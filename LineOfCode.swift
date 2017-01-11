@@ -25,7 +25,7 @@ class LineOfCode: UITableViewCell, UITextFieldDelegate {
     }
     
     
-    func lineManaging() {
+    func lineManaging() -> Bool {
         let i = Int(lineIndex.text!)
         let c = lineContent.text
         data.nowBlock.setLineCon(at: i!, with: c!)
@@ -33,7 +33,9 @@ class LineOfCode: UITableViewCell, UITextFieldDelegate {
         
         if (i == data.nowBlock.getNumberOfLines()-1) {
             data.nowBlock.newLine()
+            return true
         }
+        return false
     }
     
 }

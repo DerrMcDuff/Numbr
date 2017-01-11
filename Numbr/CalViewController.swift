@@ -52,13 +52,24 @@ class CalViewController: UITableViewController, UITextFieldDelegate {
     }
     
     @IBAction func reloadData(_ sender: UITextField) {
-        let tar = sender.superview?.superview as? LineOfCode
-        tar?.lineManaging()
+        let tar = sender.superview?.superview as! LineOfCode
+        let didAdd:Bool = tar.lineManaging()
         self.tableView.reloadData()
-        let ii:Int = tar!.indexProp+1
-        print(ii)
+        let ii:Int = tar.indexProp+1
         let i:IndexPath = IndexPath(row: ii, section: 0)
-        (tableView.cellForRow(at: i) as! LineOfCode).lineContent.becomeFirstResponder()
+        let a = (tableView.cellForRow(at: i) as? LineOfCode)
+        if a != nil {
+            a?.lineContent.becomeFirstResponder()
+        } else {
+            if (!didAdd) {
+                tableView.scrollToRow(at: IndexPath(row: tar.indexProp-3, section: 0), at: UITableViewScrollPosition.top, animated: false)
+            } else {
+                tableView.scrollToRow(at: IndexPath(row: tar.indexProp, section: 0), at: UITableViewScrollPosition.top, animated: false)
+            }
+            let b = (tableView.cellForRow(at: i) as? LineOfCode)
+            b?.lineContent.becomeFirstResponder()
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
