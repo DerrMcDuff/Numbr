@@ -9,7 +9,7 @@
 import Foundation
 
 class Block {
-    private var lines:[(Line)]
+    var lines:[(Line)]
     
     init() {
         lines = []

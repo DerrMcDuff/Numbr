@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4F0150791E21EACE00217512 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0150781E21EACE00217512 /* SettingsView.swift */; };
+		4F7F61891E2A8C48000A3FC7 /* Brain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7F61881E2A8C48000A3FC7 /* Brain.swift */; };
 		4FF492C41E1593D3005C6A2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF492C31E1593D3005C6A2A /* AppDelegate.swift */; };
 		4FF492C61E1593D3005C6A2A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF492C51E1593D3005C6A2A /* ViewController.swift */; };
 		4FF492C91E1593D3005C6A2A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FF492C71E1593D3005C6A2A /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		4F0150781E21EACE00217512 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		4F7F61881E2A8C48000A3FC7 /* Brain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Brain.swift; path = ../Brain.swift; sourceTree = "<group>"; };
 		4FF492C01E1593D3005C6A2A /* Numbr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Numbr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF492C31E1593D3005C6A2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FF492C51E1593D3005C6A2A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 		4FF492C21E1593D3005C6A2A /* Numbr */ = {
 			isa = PBXGroup;
 			children = (
+				4F7F61881E2A8C48000A3FC7 /* Brain.swift */,
 				4FF492DD1E15B582005C6A2A /* AllDatas.swift */,
 				4FF492D51E1598D0005C6A2A /* Line.swift */,
 				4FF492D71E159ACB005C6A2A /* Block.swift */,
@@ -162,6 +165,7 @@
 				4FF492C61E1593D3005C6A2A /* ViewController.swift in Sources */,
 				4FF492DE1E15B582005C6A2A /* AllDatas.swift in Sources */,
 				4FF492C41E1593D3005C6A2A /* AppDelegate.swift in Sources */,
+				4F7F61891E2A8C48000A3FC7 /* Brain.swift in Sources */,
 				4FF492DC1E15AD0E005C6A2A /* LineOfCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,6 +287,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 59DEL368A3;
 				INFOPLIST_FILE = Numbr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -296,6 +301,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 59DEL368A3;
 				INFOPLIST_FILE = Numbr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

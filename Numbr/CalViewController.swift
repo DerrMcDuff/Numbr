@@ -69,8 +69,12 @@ class CalViewController: UITableViewController, UITextFieldDelegate {
             let b = (tableView.cellForRow(at: i) as? LineOfCode)
             b?.lineContent.becomeFirstResponder()
         }
-        
     }
+    
+    @IBAction func continuousEditing(_ sender: UITextField) {
+
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()

@@ -12,7 +12,7 @@ class Line {
     
     let id:Int
     private var content:String!
-    private var answer:String!
+    private var answer:String! // this could become type Answer
     
     init(_ n:Int) {
         id = n
@@ -27,10 +27,7 @@ class Line {
         
         // Placeholder algo using NSExpression
         if content != "" {
-            let s = NSExpression(format: content)
-            let sq = s.expressionValue(with: nil, context: nil)
-            let uw = sq as! Double
-            self.answer = "\(uw)"
+            mainAlgo(data.nowBlock.lines)
         } else {
             self.answer = ""
         }
