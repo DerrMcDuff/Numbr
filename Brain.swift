@@ -1,44 +1,13 @@
 import Foundation
 
+
+//-------------------------------------------------
+
 let digits = CharacterSet.decimalDigits
 var letters = CharacterSet.letters
-
-class Variable {
-    var name:String
-    var value:Double
-    
-    init(_ n:String,_ v:Double) {
-        name = n
-        value = v
-    }
-}
-
-var dictio:[(Variable)] = []
+let shouldBDigits:CharacterSet = CharacterSet(charactersIn: ".")
 
 
-
-class Answer {
-    var number:Double?
-    var letters:String
-    
-    init(is a: String) {
-        letters = a
-    }
-    
-    init(is a: String, valueOf b: Double) {
-        letters = a
-        number = b
-    }
-    
-    func printAns() {
-        if ((self.number) != nil){
-            print("letters: \(self.letters), number: \(self.number)")
-        } else {
-            print("letters: \(self.letters)")
-        }
-        
-    }
-}
 
 enum type {
     case num
@@ -47,8 +16,81 @@ enum type {
 }
 
 
+let uppercaseLetters = Array(65...90).map {String(UnicodeScalar($0))}
+func randomLetters() -> String {
+    let randomIndex = arc4random_uniform(
+        UInt32(uppercaseLetters.count))
+    let randomIndex2 = arc4random_uniform(
+        UInt32(uppercaseLetters.count))
+    return uppercaseLetters[Int(randomIndex)]+uppercaseLetters[Int(randomIndex2)]
+}
+
+
+class Element: NSObject, NSCopying {
+    
+    var typeOf: type
+    var letters: String
+    var number: Double?
+    
+    init(_ a: String, ofType t: type) {
+        letters = a
+        typeOf = t
+    }
+    
+    func printAns() {
+        if let n = self as? Numeral {
+            print("letters: \(n.letters), number: \(n.number)")
+        } else {
+            print("letters: \(self.letters)")
+        }
+    }
+    
+    init(_ a: String) {
+        number = Double(a)
+        letters = a
+        typeOf = type.num
+    }
+    
+    init(double a: Double) {
+        number = a
+        letters = String(a)
+        typeOf = type.num
+    }
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = Element(letters, ofType: typeOf)
+        return copy
+    }
+    
+}
+
+class Numeral: Element {
+    
+    
+    override func copy(with zone: NSZone?) -> Any {
+        let copy = Numeral(letters)
+        return copy
+    }
+    
+}
+
+
+
+class Variable {
+    var letters:String
+    var number:Double
+    init(_ l:String,_ n:Double) {
+        letters = l
+        number = n
+    }
+}
+
+var dictio:[(Variable)] = []
+
+var reference:[(Element)] = []
+
 func stringType (_ c:UnicodeScalar)->type {
-    if digits.contains(c) {
+    if digits.contains(c) || shouldBDigits.contains(c){
         return type.num
     } else if letters.contains(c) {
         return type.ltr
@@ -57,106 +99,166 @@ func stringType (_ c:UnicodeScalar)->type {
     }
 }
 
-func segment (_ t:String)->[(String, type)] {
+func segment (_ t:String)-> [Element] {
     
     let tc = t.components(separatedBy: " ")
-    var segmented:[(String,type)] = []
+    var segmented:[(Element)] = []
     var one = ""
     for b in tc {
         one=""
         var currentType:type = stringType(b.unicodeScalars.first!)
         for c in b.unicodeScalars {
             let newType = stringType(c)
-            if (newType != currentType) {
-                segmented.append((one, currentType))
+            if (newType != currentType || (currentType == type.sym && newType == type.sym)) {
+                if currentType == type.num {
+                    segmented.append(Numeral(one))
+                } else {
+                    segmented.append(Element(one, ofType: currentType))
+                }
+                
                 currentType = newType
                 one = c.description
             } else {
                 one.append(c.description)
             }
         }
-        segmented.append((one, currentType))
+        if currentType == type.num {
+            segmented.append(Numeral(one))
+        } else {
+            segmented.append(Element(one, ofType: currentType))
+        }
+        
     }
     return segmented
 }
 
-func isEquation(_ g:[(String,type)])-> String {
-    var converted:[(String,type)] = g
-    var current = g[0]
-    var toCompute:String = ""
-    
-    for (ii, e) in g.enumerated() {
-        
-        if (ii != 0 && (current.1 == e.1)){
-            if !(current.0 == "*" && e.0 == "*") {
-                return ""
-            }
-        }
-        
-        if e.1 == type.ltr {
-            var found = false
-            for word in dictio {
-                if e.0 == word.name {
-                    converted[ii].0 = String(word.value)
-                    converted[ii].1 = type.num
-                    found = true
-                }
-            }
-            if (!found) {return ""}
-        }
-        
-        current = e
-        toCompute.append(converted[ii].0)
+extension String {
+    var expression: NSExpression {
+        return NSExpression(format:self)
     }
-    print(toCompute)
-    return toCompute
 }
 
-func processAction(of s:[(String,type)]) -> Answer{
+func isEquation(_ g:[Element])-> ([AnyHashable:Any],String){
     
-    let cpa = Answer(is: "")
+    
+    let justRef:Bool = (g.count == 1)&&(g[0].typeOf==type.ltr)
+    
+    var toCompute:String = ""
+    var converted:[(Element)] = g
+    var current = g[0]
+    var dic:[AnyHashable:Any] = [:]
+    
+    for (ii, e) in g.enumerated() {
+
+        if (ii != 0 && (current.typeOf == e.typeOf)){
+            if !(current.letters == "*" && e.letters == "*") {
+                return (dic,"")
+            }
+        }
+        
+        if e.typeOf == type.ltr && !dictio.isEmpty{
+            var found = false
+            for word in dictio {
+                if e.letters == word.letters {
+                    let newNum = Numeral(double: word.number)
+                    converted[ii] = newNum
+                    found = true
+                }
+                if (found) {break}
+            }
+            if (!found) {return (dic,"")}
+        }
+        
+        if justRef {
+            return (dic,converted[ii].letters)
+        }
+        
+        
+        current = e
+        
+        let funStuff = randomLetters()
+        
+        switch converted[ii].typeOf {
+        case type.num:
+            if converted[ii].number != nil {
+                reference.append(Element(double:converted[ii].number!))
+                dic["\(funStuff)"] = reference.last?.number
+                toCompute.append("\(funStuff)")
+            } else {
+                return(dic,"")
+            }
+            
+        case type.ltr:
+            // Will take care of kinds!
+            reference.append(Element(converted[ii].letters, ofType: type.ltr))
+        case type.sym:
+            reference.append(Element(converted[ii].letters, ofType: type.sym))
+            toCompute.append("\(converted[ii].letters)")
+        }
+        
+    }
+    return (dic,toCompute)
+}
+
+func compute(_ e: [Element],_ affectation:String = "")->Element {
+    
+    let answer = isEquation(e)
+    
+    
+    if answer.1 != "" {
+        if let oreo = answer.1.expression.expressionValue(with: answer.0, context: nil)  as? Double {
+            if affectation != "" {
+                dictio.append(Variable(affectation, oreo))
+            }
+            return Numeral(double:oreo)
+        }
+    } else if ((answer.0.isEmpty) && (reference.isEmpty)){
+            return Element(answer.1, ofType: type.num)
+    }
+     return Element("",ofType:type.ltr)
+}
+
+func processAction(of d:[(Element)]) -> Element {
+    
+    var cpa:Element
+    
+    
+    // Is the d too short?
+    
     
     //association
-    if (s[0].1 == type.ltr && s[1] == ("=",type.sym)) {
+    if ((d.count > 1) && (d[0].typeOf == type.ltr) && (d[1].letters == "=")){
         
-        let part = Array(s[2..<s.endIndex])
-        let answer = isEquation(part)
-        if answer != "" {
-            let exp = NSExpression(format: answer)
-            let sq = exp.expressionValue(with: nil, context: nil)
-            let uw = sq as! Double
-            cpa.number = uw
-            cpa.letters = "\(uw)"
-            let nv = Variable(s[0].0,uw)
-            dictio.append(nv)
-        }
+        let part = Array(d[2..<d.endIndex])
+        
+        cpa = compute(part, d[0].letters)
     }
     else
     {
         //computation
-        let ans = isEquation(s)
-        if ans != "" {
-            let s = NSExpression(format: ans)
-            let sq = s.expressionValue(with: nil, context: nil)
-            let uw = sq as! Double
-            cpa.number = uw
-            cpa.letters = "\(uw)"
-        }
+        cpa = compute(d)
     }
     
     return cpa
 }
 
-
 func mainAlgo (_ input:[Line]) {
     for line in input {
         if line.getContent() != "" {
             let segmentedInput = segment(line.getContent())
-            let algoAns:Answer = processAction(of: segmentedInput)
-            line.setAnswer(algoAns.letters)
-            algoAns.printAns()
+            let algoAns:Element = processAction(of: segmentedInput)
+            if algoAns.letters.hasSuffix(".0"){
+                let endex = algoAns.letters.index(algoAns.letters.endIndex, offsetBy: -2)
+                algoAns.letters = algoAns.letters.substring(to: endex)
+            }
+            if (algoAns.letters != "") {
+                line.setAnswer(" \(algoAns.letters)")
+                algoAns.printAns()
+            }
         }
+        reference.removeAll()
     }
+    // until better implementation
     
 }
 

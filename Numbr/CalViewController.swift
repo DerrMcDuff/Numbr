@@ -17,8 +17,9 @@ class CalViewController: UITableViewController, UITextFieldDelegate {
         
         tableView.delegate = self
         
+        
     }
-    
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -36,17 +37,28 @@ class CalViewController: UITableViewController, UITextFieldDelegate {
         cell.lineIndex.text = String(indexPath.row)
         cell.indexProp = Int(indexPath.row)
         cell.lineAns.text = data.nowBlock.getLineAns(at: indexPath.row)
-        cell.lineAns.sizeToFit()
         cell.lineContent.text = data.nowBlock.getLineCon(at: indexPath.row)
         
-        // Set Theme
-        let t = data.dataThemeOn
-        let n = (data.themeDictio[t]?.count)!
-        for i in 1...n {
-            if ((indexPath.row+1)%i == 0) {
-                cell.backgroundColor = data.themeDictio[t]?[i-1]
-            }
+        if data.nowBlock.getLineAns(at: indexPath.row) == "" {
+            cell.lineAns.sizeToFit()
+        } else {
+            cell.lineAns.center = cell.lineAns.originPos
+            cell.lineAns.bounds.size = cell.lineAns.originSize
         }
+        
+        // Set Theme
+//        let t = data.dataThemeOn
+//        let n = (data.themeDictio[t]?.count)!
+//        for i in 1...n {
+//            if ((indexPath.row+1)%i == 0) {
+//                cell.backgroundColor = data.themeDictio[t]?[i-1]
+//            }
+//        }
+        
+        
+        
+        
+        
         cell.lineContent.delegate = self
         return cell
     }
@@ -65,15 +77,18 @@ class CalViewController: UITableViewController, UITextFieldDelegate {
                 tableView.scrollToRow(at: IndexPath(row: tar.indexProp-3, section: 0), at: UITableViewScrollPosition.top, animated: false)
             } else {
                 tableView.scrollToRow(at: IndexPath(row: tar.indexProp, section: 0), at: UITableViewScrollPosition.top, animated: false)
-            }
+            } 
             let b = (tableView.cellForRow(at: i) as? LineOfCode)
             b?.lineContent.becomeFirstResponder()
         }
     }
     
-    @IBAction func continuousEditing(_ sender: UITextField) {
-
+    @IBAction func noMoreEditing(_ sender: UITextField) {
+        let tar = sender.superview?.superview as! LineOfCode
+        tar.unselected()
+        self.tableView.reloadData()
     }
+    
     
     
     override func viewWillAppear(_ animated: Bool) {

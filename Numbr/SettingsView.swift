@@ -11,13 +11,20 @@ import UIKit
 
 class SettingsView: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    
+
+    
+    
+    
     @IBOutlet var themePicker: UIPickerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         themePicker.delegate = self
         themePicker.dataSource = self
+        
     }
+    
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1

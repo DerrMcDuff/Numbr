@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4F0150791E21EACE00217512 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0150781E21EACE00217512 /* SettingsView.swift */; };
 		4F7F61891E2A8C48000A3FC7 /* Brain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7F61881E2A8C48000A3FC7 /* Brain.swift */; };
+		4F7F61971E2DD521000A3FC7 /* handle.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F7F61961E2DD521000A3FC7 /* handle.png */; };
+		4F7F61991E2DD7FC000A3FC7 /* Answr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7F61981E2DD7FC000A3FC7 /* Answr.swift */; };
 		4FF492C41E1593D3005C6A2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF492C31E1593D3005C6A2A /* AppDelegate.swift */; };
 		4FF492C61E1593D3005C6A2A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF492C51E1593D3005C6A2A /* ViewController.swift */; };
 		4FF492C91E1593D3005C6A2A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FF492C71E1593D3005C6A2A /* Main.storyboard */; };
@@ -24,6 +26,8 @@
 /* Begin PBXFileReference section */
 		4F0150781E21EACE00217512 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4F7F61881E2A8C48000A3FC7 /* Brain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Brain.swift; path = ../Brain.swift; sourceTree = "<group>"; };
+		4F7F61961E2DD521000A3FC7 /* handle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = handle.png; sourceTree = "<group>"; };
+		4F7F61981E2DD7FC000A3FC7 /* Answr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answr.swift; sourceTree = "<group>"; };
 		4FF492C01E1593D3005C6A2A /* Numbr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Numbr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF492C31E1593D3005C6A2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FF492C51E1593D3005C6A2A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +72,7 @@
 		4FF492C21E1593D3005C6A2A /* Numbr */ = {
 			isa = PBXGroup;
 			children = (
+				4F7F61961E2DD521000A3FC7 /* handle.png */,
 				4F7F61881E2A8C48000A3FC7 /* Brain.swift */,
 				4FF492DD1E15B582005C6A2A /* AllDatas.swift */,
 				4FF492D51E1598D0005C6A2A /* Line.swift */,
@@ -76,6 +81,7 @@
 				4FF492C51E1593D3005C6A2A /* ViewController.swift */,
 				4FF492C71E1593D3005C6A2A /* Main.storyboard */,
 				4F0150781E21EACE00217512 /* SettingsView.swift */,
+				4F7F61981E2DD7FC000A3FC7 /* Answr.swift */,
 				4FF492CA1E1593D3005C6A2A /* Assets.xcassets */,
 				4FF492CC1E1593D3005C6A2A /* LaunchScreen.storyboard */,
 				4FF492CF1E1593D3005C6A2A /* Info.plist */,
@@ -111,6 +117,12 @@
 		4FF492B81E1593D2005C6A2A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					1,
+					12,
+					2,
+					3,
+				);
 				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = anonymous;
@@ -145,6 +157,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F7F61971E2DD521000A3FC7 /* handle.png in Resources */,
 				4FF492CE1E1593D3005C6A2A /* LaunchScreen.storyboard in Resources */,
 				4FF492CB1E1593D3005C6A2A /* Assets.xcassets in Resources */,
 				4FF492C91E1593D3005C6A2A /* Main.storyboard in Resources */,
@@ -163,6 +176,7 @@
 				4FF492D61E1598D0005C6A2A /* Line.swift in Sources */,
 				4FF492D81E159ACB005C6A2A /* Block.swift in Sources */,
 				4FF492C61E1593D3005C6A2A /* ViewController.swift in Sources */,
+				4F7F61991E2DD7FC000A3FC7 /* Answr.swift in Sources */,
 				4FF492DE1E15B582005C6A2A /* AllDatas.swift in Sources */,
 				4FF492C41E1593D3005C6A2A /* AppDelegate.swift in Sources */,
 				4F7F61891E2A8C48000A3FC7 /* Brain.swift in Sources */,

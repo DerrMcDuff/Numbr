@@ -26,11 +26,9 @@ class Line {
         
         
         // Placeholder algo using NSExpression
-        if content != "" {
-            mainAlgo(data.nowBlock.lines)
-        } else {
-            self.answer = ""
-        }
+        
+        mainAlgo(data.nowBlock.lines)
+
         
     }
     func getContent()->String {
