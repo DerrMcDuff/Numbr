@@ -9,8 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    @IBOutlet weak var containerView: UIView!
+    
+    @IBOutlet var containerView: UIView!
     
     // Data Objects
     
@@ -24,9 +24,7 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    
 
 }
+
 

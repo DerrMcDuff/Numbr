@@ -24,7 +24,6 @@ class Line {
         
         //TODO: Real algo
         
-        
         // Placeholder algo using NSExpression
         
         mainAlgo(data.nowBlock.lines)

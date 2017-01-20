@@ -19,10 +19,10 @@ class Answr: UILabel {
         }
     }
     
-    let originPos: CGPoint = CGPoint(x:CGFloat(280), y:CGFloat(25))
+    let originPos: CGPoint = CGPoint(x:CGFloat(280), y:CGFloat(20))
     let originSize: CGSize = CGSize(width: 70, height: 30)
     
-    @IBInspectable var position:CGPoint = CGPoint(x:CGFloat(280), y:CGFloat(25)) {
+    @IBInspectable var position:CGPoint = CGPoint(x:CGFloat(280), y:CGFloat(20)) {
         didSet {
             self.layer.position.x = position.x
             self.layer.position.y = position.y

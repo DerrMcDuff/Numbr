@@ -11,7 +11,10 @@ import UIKit
 
 struct AllDatas {
     
-    var nowBlock:Block = Block()
+    
+    // Data stuff
+    
+    var nowBlock: Block = Block()
     
     // Theme stuff
     var dataTheme:[String] = ["Xcode","Rainbow"]

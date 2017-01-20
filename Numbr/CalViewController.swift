@@ -14,12 +14,9 @@ class CalViewController: UITableViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.delegate = self
-        
-        
     }
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -62,6 +59,12 @@ class CalViewController: UITableViewController, UITextFieldDelegate {
         cell.lineContent.delegate = self
         return cell
     }
+    
+    
+    
+    
+    
+    
     
     @IBAction func reloadData(_ sender: UITextField) {
         let tar = sender.superview?.superview as! LineOfCode
