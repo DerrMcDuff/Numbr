@@ -1,46 +1,51 @@
 //
 //  Line.swift
-//  Numbr
+//  Rfactor
 //
-//  Created by Derr McDuff on 16-12-29.
-//  Copyright © 2016 anonymous. All rights reserved.
+//  Created by Derr McDuff on 17-01-21.
+//  Copyright © 2017 anonymous. All rights reserved.
 //
 
 import Foundation
 
 class Line {
     
-    let id:Int
-    private var content:String!
-    private var answer:String! // this could become type Answer
+    var index: Int
+    var content: String
+    var answer: Answer?
     
-    init(_ n:Int) {
-        id = n
+    var relationWith: [Int]?
+    
+    init(at i: Int, withContent c: String) {
+        index = i
+        content = c
+        answer = nil
+    }
+    
+    init(at i: Int) {
+        index = i
         content = ""
-        answer = ""
+        answer = nil
     }
     
-    func fill(_ content:String) {
-        
-        //TODO: Real algo
-        
-        // Placeholder algo using NSExpression
-        
-        mainAlgo(data.nowBlock.lines)
-
-        
+    func setAnswer(with content:String) {
+        self.content = content
+        if content != "" {
+            do {
+                let result = try ParsedResult().execute(content)
+                answer = Answer(t: " \(result)")
+            } catch {
+                self.answer = nil
+                print("I don't giva damn")
+            }
+        } else {
+            answer = nil
+        }
     }
-    func getContent()->String {
-        return content
-    }
-    func setContent(_ newContent: String) {
-        content = newContent
-    }
-    func setAnswer(_ newAnswer: String) {
-        answer = newAnswer
-    }
+    
     func getAnswer()->String {
-        return answer
+        return (answer?.text)!
     }
+
     
 }

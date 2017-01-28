@@ -1,20 +1,23 @@
 //
 //  AppDelegate.swift
-//  Numbr
+//  Rfactor
 //
-//  Created by Derr McDuff on 16-12-29.
-//  Copyright © 2016 anonymous. All rights reserved.
+//  Created by Derr McDuff on 17-01-21.
+//  Copyright © 2017 anonymous. All rights reserved.
 //
 
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        let splitViewController = self.window!.rootViewController as! UISplitViewController
+        let navigationController = splitViewController.viewControllers.first(where: {$0.title=="Master"}) as! UINavigationController
+        navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         return true
     }
 
