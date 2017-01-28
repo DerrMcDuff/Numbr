@@ -7,21 +7,24 @@
 //
 
 import Foundation
-
-//: Playground - noun: a place where people can play
-
 import UIKit
-import Foundation
 
 typealias TokenGenerator = (String) -> Token?
+
+func exponential(_ n1:Double,_ n2:Double)->Double {
+    var a:Double = 1
+    for _ in 1...Int(n2) {a *= n1}
+    return a
+}
 
 var simpleOperations:[String:((Double,Double)->Double)] = [
     "+":{$0+$1},
     "-":{$0-$1},
     "*":{$0*$1},
     "/":{$0/$1},
-    "^":{var a:Double = 1; for _ in 1...Int($1) {a *= $0}; return a}
+    "^":{exponential($0,$1)}
 ]
+
 
 public enum Token {
     
