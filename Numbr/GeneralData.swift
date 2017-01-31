@@ -76,7 +76,11 @@ class GeneralData /*: NSObject, NSCoding */ {
     func saveVariable(_ name: String, _ value: Double,_ askingLine:Int) {
 
         if varDictio[name] != nil {
-            varDictio[name]?.value = value
+            let oldVar = varDictio[name]!
+            oldVar.value = value
+            oldVar.references.removeFirst()
+            oldVar.addReference(askingLine)
+            varDictio.updateValue(oldVar, forKey: name)
         } else {
             let newVar = Variable(name,value)
             newVar.addReference(askingLine)
