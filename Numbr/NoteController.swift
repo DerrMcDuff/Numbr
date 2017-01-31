@@ -85,6 +85,7 @@ class NoteController: UITableViewController, UITextFieldDelegate {
         }
         uptoDate = false
         app.allData.saveData()
+        
     }
     
     @IBAction func switchLine(_ sender: UITextField) {

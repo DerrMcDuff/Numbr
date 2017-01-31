@@ -21,13 +21,19 @@ func exponential(_ n1:Double,_ n2:Double)->Double {
 }
 
 class Operations {
+    
     var simpleOperations:[String:((Double,Double)->Double)] = ["+":{$0+$1}]
+    var complexOperations:[String:(([Double])->Double)] = [:]
     
     init () {
+        // Stock Simple
         simpleOperations.updateValue({$0-$1}, forKey: "-")
         simpleOperations.updateValue({$0*$1}, forKey: "*")
         simpleOperations.updateValue({$0/$1}, forKey: "/")
         simpleOperations.updateValue({exponential($0,$1)}, forKey: "^")
+        
+        // Stock Complex
+        complexOperations.updateValue({$0.reduce(0,+)}, forKey: "sum(")
     }
     
 }
@@ -37,9 +43,8 @@ class Operations {
 
 public enum Token {
     
-    //case Function()
+    case Function(String)
     case Variable(String)
-    //    case Operator
     case Identifier(String)
     case Number(Double)
     case ParensOpen
@@ -51,10 +56,12 @@ public enum Token {
 let tokenList: [(String, TokenGenerator)] = [
     
     ("[ \t\n]", { _ in nil }),
+    ("[a-zA-Z][a-zA-Z0-9]*\\(", {.Function($0)}),
     ("[a-zA-Z][a-zA-Z0-9]*", {(n: String) in .Variable(n)}),
     ("\\(", {_ in .ParensOpen}),
     ("\\)", {_ in .ParensClose}),
     ("[0-9.]+", { (n:String) in .Number((n as NSString).doubleValue)}),
+    (",", { _ in .Comma })
     
 ]
 
@@ -232,16 +239,13 @@ public class Parsed {
     
     
     private func parseFunction() throws -> ExprNode {
-        guard case let Token.Identifier(name) = popCurrentToken() else {
-            throw Errors.UnexpectedToken
-        }
         
-        guard case Token.ParensOpen = try seeCurrentToken() else {
+        guard case let Token.Function(name) = popCurrentToken() else {
             throw Errors.UnexpectedToken
         }
-        _ = popCurrentToken()
         
         var arguments = [ExprNode]()
+        
         if case Token.ParensClose = try seeCurrentToken() {
         }
         else {
@@ -285,6 +289,8 @@ public class Parsed {
             return try parseVariable()
         case .Number:
             return try parseNumber()
+        case .Function:
+            return try parseFunction()
         case .ParensOpen:
             return try parseParens()
         default:
@@ -339,42 +345,6 @@ public class Parsed {
         }
     }
     
-    private func parsePrototype() throws -> PrototypeNode {
-        guard case let Token.Identifier(name) = popCurrentToken() else {
-            throw Errors.ExpectedFunctionName
-        }
-        
-        guard case Token.ParensOpen = popCurrentToken() else {
-            throw Errors.ExpectedCharacter("(")
-        }
-        
-        var argumentNames = [String]()
-        while case let Token.Identifier(name) = try seeCurrentToken() {
-            _ = popCurrentToken()
-            argumentNames.append(name)
-            
-            if case Token.ParensClose = try seeCurrentToken() {
-                break
-            }
-            
-            guard case Token.Comma = popCurrentToken() else {
-                throw Errors.ExpectedArgumentList
-            }
-        }
-        
-        // remove ")"
-        _ = popCurrentToken()
-        
-        return PrototypeNode(name: name, argumentNames: argumentNames)
-    }
-    
-    private func parseDefinition() throws -> FunctionNode {
-        _ = popCurrentToken()
-        let prototype = try parsePrototype()
-        let body = try parseExpression()
-        return FunctionNode(prototype: prototype, body: body)
-    }
-    
     private func parseTopLevelExpr() throws -> FunctionNode {
         let prototype = PrototypeNode(name: "", argumentNames: [])
         let body = try parseExpression()
@@ -412,6 +382,16 @@ func compute(_ t: ExprNode) throws -> Double {
         
     }
     
+    func function(_ functionName:String,_ arguments:[Double]) throws -> Double {
+        let source = Operations()
+        for (name,op) in source.complexOperations {
+            if name == functionName {
+                return op(arguments)
+            }
+        }
+        throw Errors.ExpectedExpression
+    }
+    
     func loop (_ s: ExprNode) throws -> Double  {
         if let bn = s as? BinaryOpNode {
             
@@ -436,8 +416,13 @@ func compute(_ t: ExprNode) throws -> Double {
             
         } else if let nn = s as? NumberNode {
             return nn.value
+        }  else if let ff = s as? CallNode {
+            var args:[Double] = []
+            for e in ff.arguments {
+                args.append(try loop(e))
+            }
+            return try function(ff.callee, args)
         }
-        
         throw Errors.ExpectedExpression
     }
     return try loop(t)
