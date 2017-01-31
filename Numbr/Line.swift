@@ -7,14 +7,17 @@
 //
 
 import Foundation
+import UIKit
 
 class Line {
+    
+    let app = UIApplication.shared.delegate as! AppDelegate
     
     var index: Int
     var content: String
     var answer: Answer?
     
-    var relationWith: [Int]?
+    var variableDeclared:String?
     
     init(at i: Int, withContent c: String) {
         index = i
@@ -28,23 +31,30 @@ class Line {
         answer = nil
     }
     
-    func setAnswer(with content:String) {
-        self.content = content
+    func setAnswer() {
+        
+        if !content.contains("=") && variableDeclared != nil  {
+            let app = UIApplication.shared.delegate as! AppDelegate
+            app.allData.removeVariable(variableDeclared!)
+            variableDeclared = nil
+        }
+        
         if content != "" {
             do {
-                let result = try ParsedResult().execute(content)
+                let result = try ParsedResult().execute(content, self.index)
                 answer = Answer(t: " \(result)")
             } catch {
-                self.answer = nil
-                print("I don't giva damn")
+                
+                if variableDeclared != nil {
+                    self.answer = nil
+                    app.allData.removeVariable(variableDeclared!)
+                    variableDeclared = nil
+                }
+                
             }
         } else {
             answer = nil
         }
-    }
-    
-    func getAnswer()->String {
-        return (answer?.text)!
     }
 
     

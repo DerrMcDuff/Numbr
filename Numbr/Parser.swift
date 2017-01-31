@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+var indexOfprocessing:Int = 0
+let app = UIApplication.shared.delegate as! AppDelegate
+
 typealias TokenGenerator = (String) -> Token?
 
 func exponential(_ n1:Double,_ n2:Double)->Double {
@@ -17,13 +20,19 @@ func exponential(_ n1:Double,_ n2:Double)->Double {
     return a
 }
 
-var simpleOperations:[String:((Double,Double)->Double)] = [
-    "+":{$0+$1},
-    "-":{$0-$1},
-    "*":{$0*$1},
-    "/":{$0/$1},
-    "^":{exponential($0,$1)}
-]
+class Operations {
+    var simpleOperations:[String:((Double,Double)->Double)] = ["+":{$0+$1}]
+    
+    init () {
+        simpleOperations.updateValue({$0-$1}, forKey: "-")
+        simpleOperations.updateValue({$0*$1}, forKey: "*")
+        simpleOperations.updateValue({$0/$1}, forKey: "/")
+        simpleOperations.updateValue({exponential($0,$1)}, forKey: "^")
+    }
+    
+}
+
+
 
 
 public enum Token {
@@ -37,17 +46,6 @@ public enum Token {
     case ParensClose
     case Comma
     case Other(String)
-}
-
-func getVarValue(_ name:String) -> Any {
-    for v in instancedData.varDictio {
-        if  name == v.0 {
-            print("v1:\(v.1)")
-            return v.1
-        }
-    }
-    
-    return name
 }
 
 let tokenList: [(String, TokenGenerator)] = [
@@ -93,7 +91,7 @@ public struct NumberNode: ExprNode {
     }
 }
 
-public struct textNode: ExprNode {
+public struct TextNode: ExprNode {
     public let name: String
     public var description: String {
         return "VariableNode(\(name))"
@@ -235,7 +233,6 @@ public class Parsed {
     
     private func parseFunction() throws -> ExprNode {
         guard case let Token.Identifier(name) = popCurrentToken() else {
-            print("\(popCurrentToken())")
             throw Errors.UnexpectedToken
         }
         
@@ -267,15 +264,15 @@ public class Parsed {
     }
     
     private func parseVariable() throws -> ExprNode {
+        
         guard case let Token.Variable(s) = popCurrentToken() else {
             throw Errors.UnexpectedToken
         }
         
-        let g = getVarValue(s)
-        print(instancedData.varDictio)
+        let g = app.allData.getVarValue(s,indexOfprocessing)
         
         if g is String {
-            return textNode(name: g as! String)
+            return TextNode(name: g as! String)
         } else if g is Double {
             return NumberNode(value: g as! Double)
         }
@@ -400,15 +397,12 @@ public class Parsed {
 
 
 
-func saveVariable(_ name: String, _ value: Double) {
-    instancedData.varDictio.append(name,value)
-}
 
 func compute(_ t: ExprNode) throws -> Double {
     
     func operation(_ l:Double,_ r:Double,_ o:String) throws -> Double {
-        
-        for (name,op) in simpleOperations {
+        let source = Operations()
+        for (name,op) in source.simpleOperations {
             if name == o {
                 return op(l,r)
             }
@@ -423,12 +417,12 @@ func compute(_ t: ExprNode) throws -> Double {
             
             if bn.op == "=" {
                 
-                guard let v = bn.lN as? textNode else {
+                guard let v = bn.lN as? TextNode else {
                     return try loop(bn.rN)
                 }
                 
                 let c = try loop(bn.rN)
-                saveVariable(v.name, c)
+                app.allData.saveVariable(v.name,c,indexOfprocessing)
                 return c
                 
             } else {
@@ -456,8 +450,9 @@ class ParsedResult {
         
     }
     
-    func execute(_ t: String) throws -> Double {
+    func execute(_ t: String, _ iop: Int) throws -> (Double) {
         do {
+            indexOfprocessing = iop
             let a = try Parsed(str: t).parse()
             let b = try compute(a)
             return b

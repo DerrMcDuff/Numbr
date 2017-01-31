@@ -11,12 +11,13 @@ import UIKit
 
 class ListController: UITableViewController {
     
-    var passedNoteList:[Note] = []
+    let app = UIApplication.shared.delegate as! AppDelegate
+    var passedNoteList:[Note] = [Note(at:0)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
-        passedNoteList = instancedData.notes
+        passedNoteList = app.allData.notes
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -29,7 +30,6 @@ class ListController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "Note", for: indexPath)
-        //cell.textLabel = passedNoteList[indexPath.row]
         return cell
     }
     
@@ -41,6 +41,8 @@ class ListController: UITableViewController {
             }
         }
     }
+    
+    
     
     
     
