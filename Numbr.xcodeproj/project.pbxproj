@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F6D3F661E415C2B00DB4B28 /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6D3F651E415C2B00DB4B28 /* NoteTableViewCell.swift */; };
 		4F7DD88A1E3D372D00235537 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7DD87B1E3D372D00235537 /* Answer.swift */; };
 		4F7DD88B1E3D372D00235537 /* AnswerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7DD87C1E3D372D00235537 /* AnswerLabel.swift */; };
 		4F7DD88C1E3D372D00235537 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7DD87D1E3D372D00235537 /* AppDelegate.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F6D3F651E415C2B00DB4B28 /* NoteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
 		4F7DD87B1E3D372D00235537 /* Answer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		4F7DD87C1E3D372D00235537 /* AnswerLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerLabel.swift; sourceTree = "<group>"; };
 		4F7DD87D1E3D372D00235537 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +57,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F6D3F671E415C3500DB4B28 /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				4F6D3F651E415C2B00DB4B28 /* NoteTableViewCell.swift */,
+				4F7DD87F1E3D372D00235537 /* LineTableViewCell.swift */,
+			);
+			name = CustomCells;
+			sourceTree = "<group>";
+		};
 		4F7DD8981E3D382900235537 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,11 +108,11 @@
 			isa = PBXGroup;
 			children = (
 				4F7DD8981E3D382900235537 /* Controllers */,
+				4F6D3F671E415C3500DB4B28 /* CustomCells */,
 				4F7DD8991E3D383E00235537 /* Models */,
 				4F7DD87D1E3D372D00235537 /* AppDelegate.swift */,
 				4F7DD8881E3D372D00235537 /* Main.storyboard */,
 				4F7DD87C1E3D372D00235537 /* AnswerLabel.swift */,
-				4F7DD87F1E3D372D00235537 /* LineTableViewCell.swift */,
 				4F7DD8841E3D372D00235537 /* Assets.xcassets */,
 				4F7F61961E2DD521000A3FC7 /* handle.png */,
 				4FF492CF1E1593D3005C6A2A /* Info.plist */,
@@ -203,6 +214,7 @@
 				4F7DD88B1E3D372D00235537 /* AnswerLabel.swift in Sources */,
 				4F7DD88A1E3D372D00235537 /* Answer.swift in Sources */,
 				4F7DD88F1E3D372D00235537 /* ListController.swift in Sources */,
+				4F6D3F661E415C2B00DB4B28 /* NoteTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
