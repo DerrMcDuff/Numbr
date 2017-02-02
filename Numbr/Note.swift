@@ -15,17 +15,20 @@ class Note: NSObject {
     
     // Local Variables
     private var index: Int
+    private var activeCell: Int
     private var lines: [Line]
     
     // Initialisation
     init(at i:Int, withLines l:[Line]) {
         index = i
-        lines = [Line(at:0), Line(at:1), Line(at:2)]
+        lines = [Line(at:0)]
+        activeCell = 0
     }
     
     init(at i:Int){
         index = i
-        lines = [Line(at:0), Line(at:1), Line(at:2)]
+        lines = [Line(at:0)]
+        activeCell = 0
     }
     
     
@@ -69,8 +72,8 @@ class Note: NSObject {
     
     func convertForSave() -> String {
         var converted = ""
-        converted.append("\(index)")
-        converted.append("|||")
+        converted.append("\(index)|||")
+        converted.append("\(activeCell)|||")
         for (i,line) in lines.enumerated() {
             converted.append("\(i)ÇÇÇ\(line.content)")
             if line.answer != nil  {
@@ -94,11 +97,13 @@ class Note: NSObject {
         let t = s.components(separatedBy: "|||")
         if t == [] {
             self.index = 0
-            self.lines = [Line(at: 0),Line(at: 1),Line(at: 2)]
+            self.activeCell = 0
+            self.lines = [Line(at: 0)]
         } else {
             self.index = Int(t[0])!
+            self.activeCell = Int(t[1])!
             var l:[Line] = []
-            for line in t[1...(t.count-1)] {
+            for line in t[2...(t.count-1)] {
                 let brokenLine:[String] = line.components(separatedBy: "ÇÇÇ")
                 if let test:Int = Int(brokenLine[0]) {
                     let ll = Line(at: test)
@@ -116,6 +121,10 @@ class Note: NSObject {
             }
             self.lines = l
         }
+    }
+    
+    func getIndex() -> Int {
+        return self.index
     }
     
 }

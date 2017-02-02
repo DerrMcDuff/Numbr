@@ -17,6 +17,11 @@ class GeneralData /*: NSObject, NSCoding */ {
     var varDictio:[String:(Variable)] = [:]
     
     
+    
+    
+    
+    // Data managing ------------------------------------------
+    
     func loadData() {
         let defaults = UserDefaults.standard
         activeNote = defaults.integer(forKey: "activeNote") 
@@ -64,14 +69,18 @@ class GeneralData /*: NSObject, NSCoding */ {
         for v in varDictio {
             rawDictio.append(v.value.convertForSave())
         }
-        defaults.set(rawDictio, forKey: "varDictio")
+        if !rawDictio.isEmpty {
+            defaults.set(rawDictio, forKey: "varDictio")
+        }
+        
         
     }
     
     
-    //-----------------------
+    //-----------------------------------------------------
     
     
+    // Variable stuff -------------------------------------
     
     func saveVariable(_ name: String, _ value: Double,_ askingLine:Int) {
 

@@ -28,6 +28,10 @@ class LineTableViewCell: UITableViewCell {
         
     }
     
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        
+    }
+    
     
     
     func reveal(_ sender:UIPanGestureRecognizer) {

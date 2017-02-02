@@ -14,14 +14,19 @@ class ListController: UITableViewController,UITextFieldDelegate {
     let app = UIApplication.shared.delegate as! AppDelegate
     var passedNoteList:[Note] = [Note(at:0)]
     @IBOutlet var addNewNote: UIBarButtonItem!
-
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
+        
+        if app.allData.notes.isEmpty {
+            app.allData.notes.append(Note(at:0))
+        }
+        
         passedNoteList = app.allData.notes
     }
+    
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -40,6 +45,7 @@ class ListController: UITableViewController,UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        app.allData.saveData()
         if segue.identifier == "showNote" {
             if let indexOfNote = self.tableView.indexPathForSelectedRow?.row {
                 let controller = (segue.destination as! UINavigationController).topViewController as! NoteController
@@ -53,6 +59,10 @@ class ListController: UITableViewController,UITextFieldDelegate {
         passedNoteList.append(Note(at: passedNoteList.count))
         let indexPath = IndexPath(row: 0, section: 0)
         self.tableView.insertRows(at: [indexPath], with: .automatic)
+        
+        app.allData.saveData()
+        app.allData.loadData()
+        passedNoteList = app.allData.notes
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -64,6 +74,9 @@ class ListController: UITableViewController,UITextFieldDelegate {
             app.allData.notes.remove(at: app.allData.notes.count-indexPath.row-1)
             passedNoteList.remove(at:passedNoteList.count-indexPath.row-1)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            app.allData.saveData()
+            passedNoteList = app.allData.notes
         }
     }
     

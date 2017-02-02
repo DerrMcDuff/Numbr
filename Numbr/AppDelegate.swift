@@ -22,8 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationController.topViewController!.navigationItem.leftBarButtonItem = split?.displayModeButtonItem
         
         allData = GeneralData()
-        
         allData.loadData()
+        
+        if allData.notes.isEmpty {
+            allData.notes.append(Note(at:0))
+        }
         
         print(allData.varDictio)
         

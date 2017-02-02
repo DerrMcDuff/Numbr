@@ -12,16 +12,16 @@ import UIKit
 @IBDesignable
 class AnswerLabel: UILabel {
     
-    @IBInspectable var cornerRadius:CGFloat = 5.0 {
+    @IBInspectable var cornerRadius:CGFloat = 0.0 {
         didSet {
             self.layer.cornerRadius = cornerRadius
         }
     }
     
-    let originPos: CGPoint = CGPoint(x:CGFloat(280), y:CGFloat(22))
-    let originSize: CGSize = CGSize(width: 70, height: 30)
+    let originPos: CGPoint = CGPoint(x:CGFloat(281), y:CGFloat(16.5))
+    let originSize: CGSize = CGSize(width: 75, height: 30)
     
-    @IBInspectable var position:CGPoint = CGPoint(x:CGFloat(280), y:CGFloat(22)) {
+    @IBInspectable var position:CGPoint = CGPoint(x:CGFloat(281), y:CGFloat(16.5)) {
         didSet {
             self.layer.position.x = position.x
             self.layer.position.y = position.y
@@ -36,14 +36,21 @@ class AnswerLabel: UILabel {
         handle = UIImageView(image: image)
         handle!.frame = CGRect(x: self.bounds.minX, y: self.bounds.minY+2, width: 10, height: self.bounds.height-4)
         handle?.isOpaque = true
-        self.addSubview(handle!)
-        self.layer.borderWidth = 0.5
         
-    }
-    
-    override func drawText(in rect: CGRect) {
-        let insets = UIEdgeInsets.init(top: 0, left: 20, bottom: 0, right: 0)
-        super.drawText(in: UIEdgeInsetsInsetRect(rect, insets))
+        self.addSubview(handle!)
+        self.roundCorners(corners: [.topLeft,.bottomLeft], radius: 5.0)
     }
 
+}
+
+extension UILabel {
+    func roundCorners(corners:UIRectCorner, radius: CGFloat) {
+        
+        
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        self.layer.mask = mask
+        
+    }
 }
