@@ -11,8 +11,7 @@ import UIKit
 
 class NoteTableViewCell:UITableViewCell {
     
+    // Title of Note
     @IBOutlet var NoteTitle: UITextField!
-    
-    
     
 }

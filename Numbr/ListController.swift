@@ -15,6 +15,14 @@ class ListController: UITableViewController,UITextFieldDelegate {
     var passedNoteList:[Note] = [Note(at:0)]
     @IBOutlet var addNewNote: UIBarButtonItem!
     
+    @IBOutlet var clear: UIButton!
+    
+    @IBAction func clearUser(_ sender: UIButton) {
+        
+        UserDefaults.standard.removeObject(forKey: "varDictio")
+        
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

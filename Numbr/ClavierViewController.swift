@@ -39,7 +39,7 @@ class ClavierView: UIView {
                 switch newChar {
                 case "del":
                     field.text! = String(field.text!.characters.dropLast(1))
-                case "go":
+                case "v":
                     pv?.switchLine(field)
                     pv?.continuousEditing(field)
                 case "sub":

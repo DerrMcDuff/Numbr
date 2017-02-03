@@ -10,6 +10,7 @@ import Foundation
 
 class Answer {
     
+    // Answer
     var text:String?
     
     init(t:String) {
@@ -35,3 +36,12 @@ class Answer {
     var fraction:String?
     
 }
+
+
+
+
+
+
+
+
+

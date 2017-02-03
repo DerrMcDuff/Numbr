@@ -56,15 +56,16 @@ class NoteController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func updateVariables() -> Bool {
         
-        for (i,v) in app.allData.varDictio.enumerated() {
+        var i:Int = 0
+        
+        for v in app.allData.varDictio.sorted(by: { $0.0 < $1.0 }) {
             if i < shortcuts.count {
                 shortcuts[i].titleLabel?.text = v.key
-                return true
+                print("notelse")
             } else {
-                shortcuts[i].titleLabel?.text = ""
-                shortcuts[i].sizeToFit()
                 return true
             }
+            i += 1
         }
         return true
     }
@@ -138,12 +139,12 @@ class NoteController: UIViewController, UITableViewDelegate, UITableViewDataSour
             passedNote = app.allData.notes[index]
             activeCell = passedNote.getIndex()
             
-            _ = updateVariables()
+//            _ = updateVariables()
             
             return
         }
-        uptoDate = false
         
+        uptoDate = false
         
     }
     
