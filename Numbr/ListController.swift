@@ -12,16 +12,9 @@ import UIKit
 class ListController: UITableViewController,UITextFieldDelegate {
     
     let app = UIApplication.shared.delegate as! AppDelegate
-    var passedNoteList:[Note] = [Note(at:0)]
+    var passedNoteList:[Note]!
     @IBOutlet var addNewNote: UIBarButtonItem!
-    
-    @IBOutlet var clear: UIButton!
-    
-    @IBAction func clearUser(_ sender: UIButton) {
-        
-        UserDefaults.standard.removeObject(forKey: "varDictio")
-        
-    }
+
     
     
     override func viewDidLoad() {
@@ -32,6 +25,12 @@ class ListController: UITableViewController,UITextFieldDelegate {
             app.allData.notes.append(Note(at:0))
         }
         
+        app.allData.loadData()
+        passedNoteList = app.allData.notes
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        app.allData.loadData()
         passedNoteList = app.allData.notes
     }
     
@@ -53,24 +52,25 @@ class ListController: UITableViewController,UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        app.allData.saveData()
+        
         if segue.identifier == "showNote" {
             if let indexOfNote = self.tableView.indexPathForSelectedRow?.row {
                 let controller = (segue.destination as! UINavigationController).topViewController as! NoteController
-                controller.index = app.allData.notes.count-indexOfNote-1
+                controller.index = passedNoteList.count-indexOfNote-1
             }
         }
     }
     
     @IBAction func add(_ sender: UIButton) {
-        app.allData.notes.append(Note(at: app.allData.notes.count))
-        passedNoteList.append(Note(at: passedNoteList.count))
+        
+        passedNoteList.append(Note(at: indexOfNote))
         let indexPath = IndexPath(row: 0, section: 0)
         self.tableView.insertRows(at: [indexPath], with: .automatic)
         
+        app.allData.notes = passedNoteList
         app.allData.saveData()
         app.allData.loadData()
-        passedNoteList = app.allData.notes
+        
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -79,12 +79,13 @@ class ListController: UITableViewController,UITextFieldDelegate {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
-            app.allData.notes.remove(at: app.allData.notes.count-indexPath.row-1)
             passedNoteList.remove(at:passedNoteList.count-indexPath.row-1)
             tableView.deleteRows(at: [indexPath], with: .fade)
             
+            app.allData.notes = passedNoteList
             app.allData.saveData()
-            passedNoteList = app.allData.notes
+            app.allData.loadData()
+            
         }
     }
     

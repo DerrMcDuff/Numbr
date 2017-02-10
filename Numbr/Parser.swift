@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 var indexOfprocessing:Int = 0
+var indexOfNote: Int = 0
+var varToReturn:[Variable] = []
 let app = UIApplication.shared.delegate as! AppDelegate
 
 typealias TokenGenerator = (String) -> Token?
@@ -273,7 +275,7 @@ public class Parsed {
             throw Errors.UnexpectedToken
         }
         
-        let g = app.allData.getVarValue(s,indexOfprocessing)
+        let g = app.allData.notes[indexOfNote].getVarValue(s,indexOfprocessing)
         
         if g is String {
             return TextNode(name: g as! String)
@@ -402,7 +404,9 @@ func compute(_ t: ExprNode) throws -> Double {
                 }
                 
                 let c = try loop(bn.rN)
-                app.allData.saveVariable(v.name,c,indexOfprocessing)
+                let newVar = Variable(v.name,c)
+                newVar.addReference(indexOfprocessing)
+                varToReturn.append(newVar)
                 return c
                 
             } else {
@@ -435,12 +439,14 @@ class ParsedResult {
         
     }
     
-    func execute(_ t: String, _ iop: Int) throws -> (Double) {
+    func execute(_ t: String, note nop:Int , line iop: Int) throws -> (Double,[Variable]) {
         do {
+            varToReturn = []
             indexOfprocessing = iop
+            indexOfNote = nop
             let a = try Parsed(str: t).parse()
             let b = try compute(a)
-            return b
+            return (b,varToReturn)
         } catch {
             throw Errors.ExpectedExpression
         }

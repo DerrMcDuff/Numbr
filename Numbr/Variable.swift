@@ -29,7 +29,6 @@ class Variable {
             return
         }
         
-        
     }
     
     func removeReference(_ i: Int) {
@@ -47,11 +46,10 @@ class Variable {
     
     
     init(forLoad s:String) {
-        let t = s.components(separatedBy: "&&&")
         
+        let t = s.components(separatedBy: "&&&")
         self.name = t[0]
         self.value = Double(t[1])!
-        
         var refsToLoad:[Int] = []
         
         for reference in t.dropFirst(2) {

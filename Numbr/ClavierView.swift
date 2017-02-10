@@ -13,18 +13,6 @@ class ClavierView: UIView {
     
     @IBOutlet var numberKeys: [UIButton]!
     @IBOutlet var otherKeys: [UIButton]!
-    
-    func parentViewController()-> NoteController? {
-        var parentResponder: UIResponder? = self
-        while parentResponder != nil {
-            parentResponder = parentResponder!.next
-            if let viewController = parentResponder as? NoteController {
-                return viewController
-            }
-        }
-        return nil
-    }
-
 
     @IBAction func touchNumberKey(_ sender: UIButton) {
         
@@ -66,4 +54,18 @@ class ClavierView: UIView {
     }
 
     
+}
+
+extension UIView {
+    func parentViewController()-> NoteController? {
+        var parentResponder: UIResponder? = self
+        while parentResponder != nil {
+            parentResponder = parentResponder!.next
+            if let viewController = parentResponder as? NoteController {
+                return viewController
+            }
+        }
+        return nil
+    }
+
 }

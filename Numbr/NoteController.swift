@@ -18,28 +18,53 @@ class NoteController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var uptoDate:Bool = false
     
     
-    @IBOutlet var clavierView: UIView!
+  
     @IBOutlet var aTableView: UITableView!
-    
-    @IBOutlet var shortcuts: [UIButton]!
-    
+    var shortcutView:ShortcutsView!
+    @IBOutlet var clavierView: ClavierView!
     
     override func viewDidLoad() {
         
+        // Initialize controller Data
         passedNote = app.allData.notes[index]
         activeCell = passedNote.getIndex()
+        
+        // Delegation
+        
+        // TableView
         self.aTableView.delegate = self
         self.aTableView.dataSource = self
+        
         self.automaticallyAdjustsScrollViewInsets = false
-        super.viewDidLoad()
+        
+        // Put in-app input on top
         self.view.bringSubview(toFront: clavierView)
-        _ = self.updateVariables()
+        
+        // Notification for Keyboard
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        
+        // View handler
+        
         aTableView.bounds.size.height = 225
         aTableView.layer.position.y = 400
         _ = setTableViewPosition()
         aTableView.scrollToRow(at: IndexPath(row:activeCell,section:0), at: UITableViewScrollPosition.top, animated: true)
-        print("damn")
+        highlightLine(activeCell)
+        
+        
+        shortcutView = ShortcutsView(CGFloat(290))
+        view.addSubview(shortcutView)
+        shortcutView.refreshShortcuts()
+        self.view.bringSubview(toFront: shortcutView)
+        super.viewDidLoad()
     }
+    
+    
+    
+    
+    
     
     func setTableViewPosition()->Bool {
         
@@ -52,35 +77,11 @@ class NoteController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         return true
     }
-
     
-    func updateVariables() -> Bool {
-        
-        var i:Int = 0
-        
-        for v in app.allData.varDictio.sorted(by: { $0.0 < $1.0 }) {
-            if i < shortcuts.count {
-                shortcuts[i].titleLabel?.text = v.key
-                print("notelse")
-            } else {
-                return true
-            }
-            i += 1
-        }
-        return true
-    }
-    
-    
-    
-    
-    
-    
-    // Creating the table
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return passedNote.getLinesCount()
@@ -108,7 +109,10 @@ class NoteController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.answer.isHidden = true
         } else {
             cell.answer.isHidden = false
-            cell.answer.text = passedNote.getLine(at: indexPath.row).answer?.getText()
+            var txt:String = " "
+            txt.append(passedNote.getLine(at: indexPath.row).answer!.getText()!)
+            cell.answer.text = txt
+            
             cell.answer.center = cell.answer.originPos
             cell.answer.bounds.size = cell.answer.originSize
             cell.answer.bounds.size.height = 30
@@ -119,7 +123,6 @@ class NoteController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // Actions
     
-    
     @IBAction func continuousEditing(_ sender: UITextField) {
         
         guard uptoDate else {
@@ -127,6 +130,7 @@ class NoteController: UIViewController, UITableViewDelegate, UITableViewDataSour
             activeCell = Int((sender.superview?.superview as! LineTableViewCell).index.text!)!
             
             let rowsToUpdate:[Int] = passedNote.updateFromLine(at: activeCell, with: sender.text!)
+            
             var rowPaths: [NSIndexPath] = []
             
             for i in rowsToUpdate {
@@ -135,11 +139,10 @@ class NoteController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             aTableView.reloadRows(at: rowPaths as [IndexPath], with: .fade)
             
+            app.allData.notes[index] = self.passedNote
             app.allData.saveData()
-            passedNote = app.allData.notes[index]
-            activeCell = passedNote.getIndex()
-            
-//            _ = updateVariables()
+            app.allData.loadData()
+            shortcutView.refreshShortcuts()
             
             return
         }
@@ -169,6 +172,7 @@ class NoteController: UIViewController, UITableViewDelegate, UITableViewDataSour
             aTableView.reloadData()
         }
         _ = setTableViewPosition()
+        
         if let newActiveCell = aTableView.cellForRow(at: IndexPath(row: activeCell+1, section: 0)) as? LineTableViewCell {
             newActiveCell.content.becomeFirstResponder()
             aTableView.cellForRow(at: IndexPath(row:activeCell,section:0))!.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -178,26 +182,44 @@ class NoteController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let newActiveCell = aTableView.cellForRow(at: IndexPath(row: activeCell+1, section: 0)) as! LineTableViewCell
             newActiveCell.content.becomeFirstResponder()
         }
-        activeCell += 1
         
+        activeCell += 1
         app.allData.notes[index] = self.passedNote
         app.allData.saveData()
         app.allData.loadData()
-        _ = updateVariables()
+        shortcutView.refreshShortcuts()
     }
     
- 
+    // Selection handling
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
-        _ = updateVariables()
         textField.isUserInteractionEnabled = false
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         uptoDate = false
-        aTableView.cellForRow(at: indexPath)!.backgroundColor = #colorLiteral(red: 0.2387202274, green: 0.986285238, blue: 1, alpha: 0.1540560788)
+        highlightLine(indexPath.row)
         continuousEditing((aTableView.cellForRow(at: IndexPath(row:activeCell,section:0)) as! LineTableViewCell).content)
         activeCell = indexPath.row
-
     }
     
+    func highlightLine(_ r:Int) {
+        aTableView.reloadData()
+        aTableView.cellForRow(at: IndexPath(row:r, section: 0))!.backgroundColor = #colorLiteral(red: 0.2387202274, green: 0.986285238, blue: 1, alpha: 0.1540560788)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        print("show")
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            kbH = CGFloat(keyboardSize.height)
+        }
+        shortcutView.moveTo(.overKeyboard)
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        print("hide")
+        shortcutView.moveTo(.origin)
+    }
+    
+
 }

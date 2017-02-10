@@ -28,8 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             allData.notes.append(Note(at:0))
         }
         
-        print(allData.varDictio)
-        
         return true
     }
 
