@@ -13,7 +13,6 @@ class RoundedButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layer.borderWidth = 1.0
         layer.cornerRadius = 5.0
         clipsToBounds = true
         contentEdgeInsets = UIEdgeInsets(top: 5, left: 3, bottom: 5, right: 3)

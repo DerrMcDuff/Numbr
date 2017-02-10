@@ -11,6 +11,8 @@ import UIKit
 
 class NoteController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
+    
+    
     var activeCell:Int = 0
     let app = UIApplication.shared.delegate as! AppDelegate
     var index: Int = 0
@@ -69,7 +71,7 @@ class NoteController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func setTableViewPosition()->Bool {
         
         if aTableView.layer.position.y > 180 && self.passedNote.getLinesCount()<7 {
-            aTableView.layer.position.y = 400
+            aTableView.layer.position.y = 403
             aTableView.layer.position.y = aTableView.layer.position.y - CGFloat(self.passedNote.getLinesCount() * (34))
         } else {
             aTableView.layer.position.y = 175
@@ -158,7 +160,10 @@ class NoteController: UIViewController, UITableViewDelegate, UITableViewDataSour
         activeCell = Int((sender.superview?.superview as! LineTableViewCell).index.text!)!
         
         
-        let rowsToUpdate:[Int] = passedNote.updateFromLine(at: activeCell, with: sender.text!)
+        let rowsToUpdate:[Int] = app.allData.notes[index].updateFromLine(at: activeCell, with: sender.text!)
+        
+        passedNote = app.allData.notes[index]
+        
         var rowPaths: [NSIndexPath] = []
         
         for i in rowsToUpdate {

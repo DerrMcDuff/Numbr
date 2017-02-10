@@ -22,8 +22,7 @@ class ShortcutsView: UIView {
         
         let panelRect:CGRect = CGRect(x: Double(0), y: Double(origin), width: Double(UIScreen.main.bounds.width), height: Double(40))
         super.init(frame: panelRect)
-        self.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        self.layer.borderWidth = 0.5
+        self.backgroundColor = #colorLiteral(red: 0.9124637757, green: 0.9124637757, blue: 0.9124637757, alpha: 1)
         refreshShortcuts()
     }
     

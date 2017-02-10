@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
+
 class Note: NSObject {
-    
     let app = UIApplication.shared.delegate as! AppDelegate
     
     // Local Variables
@@ -55,17 +55,22 @@ class Note: NSObject {
     func updateFromLine(at i: Int, with s: String) -> [Int] {
         
         lines[i].content = s
-        let fetchedRefs = getReferences(from: i)
+        var fetchedRefs = getReferences(from: i)
         
         for ref in fetchedRefs {
             let feedback = lines[ref].setAnswer()
-            if feedback.0 == "Add" {
-                saveVariable(feedback.1.name,feedback.1.value,feedback.1.references[0])
-            } else if feedback.0 == "Remove" {
-                removeVariable(feedback.1.name)
+            for f in feedback {
+                if f.0 == "Add" {
+                    saveVariable(f.1.name,f.1.value,f.1.references[0])
+                    
+                } else if f.0 == "Remove" {
+                    
+                    removeVariable(f.1.name)
+                }
             }
         }
-        print(fetchedRefs)
+        
+        fetchedRefs = getReferences(from: i)
         return fetchedRefs
         
     }
@@ -73,8 +78,9 @@ class Note: NSObject {
     func getReferences(from i: Int) -> [Int] {
         
         if (self.lines[i].variableDeclared != nil) {
-            let x = varDictio.filter({$0.name == self.lines[i].variableDeclared!})[0]
-            return x.references
+            let x = varDictio.index(where: {$0.name == self.lines[i].variableDeclared!})
+            print("the refs fro getrefs\(varDictio[x!].references)")
+            return varDictio[x!].references
         } else {
             return [i]
         }
@@ -84,33 +90,35 @@ class Note: NSObject {
     // Var stuff
     
     func removeVariable(_ name:String){
-        varDictio = varDictio.filter({$0.name != name})
+        app.allData.notes[index].varDictio = app.allData.notes[index].varDictio.filter({$0.name != name})
     }
     
     func getVarValue(_ name:String, _ askingLine: Int) -> Any {
         
+        let app = UIApplication.shared.delegate as! AppDelegate
         
         // Variable exists
         
-        if varDictio.filter({$0.name == name}).count > 0 {
+        if app.allData.notes[index].varDictio.filter({$0.name == name}).count > 0 {
             
-            let found = varDictio.filter({$0.name == name})[0]
+            let found = app.allData.notes[index].varDictio.index(where: {$0.name == name})!
             
             // Variable exists but ref is already in dictio
-            if (found.references.contains(askingLine)) {
+            if (app.allData.notes[index].varDictio[found].references.contains(askingLine)) {
                 
                 // Variable exists but it's from askingLine
-                if found.references.first == askingLine {
+                if app.allData.notes[index].varDictio[found].references.first == askingLine {
                     return name
                 } else {
-                    found.addReference(askingLine)
+                    app.allData.notes[index].varDictio[found].addReference(askingLine)
                 }
             } else {
-                found.addReference(askingLine)
+                app.allData.notes[index].varDictio[found].addReference(askingLine)
             }
-            return found.value
+            return app.allData.notes[index].varDictio[found].value
         }
         return name
+        
     }
     
     // Data stuff
@@ -140,6 +148,7 @@ class Note: NSObject {
             converted.append("€€€\(v.convertForSave())")
         }
         
+        print(converted)
         return converted
     }
     
@@ -190,17 +199,16 @@ class Note: NSObject {
         }
         
         varDictio = futurVD
-        print(futurVD)
         
     }
     
     func saveVariable(_ name: String, _ value: Double,_ askingLine:Int) {
         
         if varDictio.contains(where: {$0.name == name}) {
-            if let oldVar = varDictio.first(where: {$0.name == name}) {
-                oldVar.value = value
-                oldVar.references.remove(at: 0)
-                oldVar.addReference(askingLine)
+            if let oldVarI = varDictio.index(where: {$0.name == name}) {
+                varDictio[oldVarI].value = value
+                varDictio[oldVarI].references.removeFirst(1)
+                varDictio[oldVarI].addReference(askingLine)
             }
             
         } else {

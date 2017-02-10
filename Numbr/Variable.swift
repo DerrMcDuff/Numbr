@@ -24,8 +24,10 @@ class Variable {
     func addReference(_ i:Int) {
         
         guard references.contains(i) else {
+            
             references.append(i)
             references = references.sorted()
+            print("ref to add\(references)")
             return
         }
         
@@ -37,6 +39,9 @@ class Variable {
     
     
     func convertForSave() -> String {
+        
+        print("cfs\(self.references)")
+        
         var converted = "\(name)&&&\(value)"
         for reference in references {
             converted.append("&&&\(reference)")

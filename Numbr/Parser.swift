@@ -9,10 +9,10 @@
 import Foundation
 import UIKit
 
+let app = UIApplication.shared.delegate as! AppDelegate
 var indexOfprocessing:Int = 0
 var indexOfNote: Int = 0
 var varToReturn:[Variable] = []
-let app = UIApplication.shared.delegate as! AppDelegate
 
 typealias TokenGenerator = (String) -> Token?
 
