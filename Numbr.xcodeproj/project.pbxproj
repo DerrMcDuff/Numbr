@@ -21,15 +21,13 @@
 		4F7DD8951E3D372D00235537 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F7DD8881E3D372D00235537 /* Main.storyboard */; };
 		4F7DD8971E3D37C400235537 /* GeneralData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7DD8961E3D37C400235537 /* GeneralData.swift */; };
 		4F7DD8BB1E3D393600235537 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F7DD8BA1E3D393600235537 /* LaunchScreen.storyboard */; };
-		4F7F61971E2DD521000A3FC7 /* handle.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F7F61961E2DD521000A3FC7 /* handle.png */; };
-		4F9B561A1E42D40200B11374 /* multiplication.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F9B56171E42D40200B11374 /* multiplication.png */; };
-		4F9B561D1E42D48600B11374 /* addition.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F9B561C1E42D48600B11374 /* addition.png */; };
-		4F9B561F1E42D5C100B11374 /* substract.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F9B561E1E42D5C100B11374 /* substract.png */; };
-		4F9B56211E42D6CF00B11374 /* divide.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F9B56201E42D6CF00B11374 /* divide.png */; };
 		4FAB707D1E3E6ACB005518BD /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAB707C1E3E6ACB005518BD /* Variable.swift */; };
 		4FAC06331E4C309600AAE12A /* ClavierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAC06321E4C309600AAE12A /* ClavierView.swift */; };
 		4FAC06361E4CC72300AAE12A /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAC06341E4CC72300AAE12A /* RoundedButton.swift */; };
 		4FAC06371E4CC72300AAE12A /* ShortcutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAC06351E4CC72300AAE12A /* ShortcutsView.swift */; };
+		4FE408651E58C25C00080C3F /* popKeyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FE408641E58C25C00080C3F /* popKeyboard.png */; };
+		4FE408671E58C88100080C3F /* Back.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FE408661E58C88100080C3F /* Back.png */; };
+		4FE408691E58C8E700080C3F /* go.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FE408681E58C8E700080C3F /* go.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,15 +45,13 @@
 		4F7DD8891E3D372D00235537 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
 		4F7DD8961E3D37C400235537 /* GeneralData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralData.swift; sourceTree = "<group>"; };
 		4F7DD8BA1E3D393600235537 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		4F7F61961E2DD521000A3FC7 /* handle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = handle.png; sourceTree = "<group>"; };
-		4F9B56171E42D40200B11374 /* multiplication.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplication.png; sourceTree = "<group>"; };
-		4F9B561C1E42D48600B11374 /* addition.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addition.png; sourceTree = "<group>"; };
-		4F9B561E1E42D5C100B11374 /* substract.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = substract.png; sourceTree = "<group>"; };
-		4F9B56201E42D6CF00B11374 /* divide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = divide.png; sourceTree = "<group>"; };
 		4FAB707C1E3E6ACB005518BD /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
 		4FAC06321E4C309600AAE12A /* ClavierView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClavierView.swift; path = Numbr/ClavierView.swift; sourceTree = "<group>"; };
 		4FAC06341E4CC72300AAE12A /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		4FAC06351E4CC72300AAE12A /* ShortcutsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShortcutsView.swift; path = Numbr/ShortcutsView.swift; sourceTree = "<group>"; };
+		4FE408641E58C25C00080C3F /* popKeyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popKeyboard.png; sourceTree = "<group>"; };
+		4FE408661E58C88100080C3F /* Back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back.png; sourceTree = "<group>"; };
+		4FE408681E58C8E700080C3F /* go.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = go.png; sourceTree = "<group>"; };
 		4FF492C01E1593D3005C6A2A /* Numbr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Numbr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF492CF1E1593D3005C6A2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,11 +101,9 @@
 		4F9B561B1E42D42000B11374 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				4F9B56201E42D6CF00B11374 /* divide.png */,
-				4F9B561C1E42D48600B11374 /* addition.png */,
-				4F9B561E1E42D5C100B11374 /* substract.png */,
-				4F7F61961E2DD521000A3FC7 /* handle.png */,
-				4F9B56171E42D40200B11374 /* multiplication.png */,
+				4FE408661E58C88100080C3F /* Back.png */,
+				4FE408681E58C8E700080C3F /* go.png */,
+				4FE408641E58C25C00080C3F /* popKeyboard.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -199,6 +193,7 @@
 					12,
 					2,
 					3,
+					8,
 				);
 				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0820;
@@ -235,14 +230,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F7F61971E2DD521000A3FC7 /* handle.png in Resources */,
-				4F9B561D1E42D48600B11374 /* addition.png in Resources */,
-				4F9B56211E42D6CF00B11374 /* divide.png in Resources */,
-				4F9B561F1E42D5C100B11374 /* substract.png in Resources */,
 				4F7DD8931E3D372D00235537 /* Assets.xcassets in Resources */,
-				4F9B561A1E42D40200B11374 /* multiplication.png in Resources */,
 				4F7DD8BB1E3D393600235537 /* LaunchScreen.storyboard in Resources */,
+				4FE408671E58C88100080C3F /* Back.png in Resources */,
+				4FE408651E58C25C00080C3F /* popKeyboard.png in Resources */,
 				4F7DD8951E3D372D00235537 /* Main.storyboard in Resources */,
+				4FE408691E58C8E700080C3F /* go.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

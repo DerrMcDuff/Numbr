@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if allData.notes.isEmpty {
             allData.notes.append(Note(at:0))
+            allData.saveData()
         }
         
         return true

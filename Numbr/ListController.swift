@@ -12,7 +12,7 @@ import UIKit
 class ListController: UITableViewController,UITextFieldDelegate {
     
     let app = UIApplication.shared.delegate as! AppDelegate
-    var passedNoteList:[Note]!
+    var passedNoteList:[Note] = [Note(at:0)]
     @IBOutlet var addNewNote: UIBarButtonItem!
 
     
@@ -20,11 +20,6 @@ class ListController: UITableViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
-        
-        if app.allData.notes.isEmpty {
-            app.allData.notes.append(Note(at:0))
-        }
-        
         app.allData.loadData()
         passedNoteList = app.allData.notes
     }

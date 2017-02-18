@@ -31,13 +31,13 @@ class AnswerLabel: UILabel {
     override func draw(_ rect: CGRect) {
         super.drawText(in: rect)
         
-        let image = UIImage(named: "handle.png")
-        var handle: UIImageView?
-        handle = UIImageView(image: image)
-        handle!.frame = CGRect(x: self.bounds.minX, y: self.bounds.minY+2, width: 10, height: self.bounds.height-4)
-        handle?.isOpaque = true
-        
-        self.addSubview(handle!)
+//        let image = UIImage(named: "handle.png")
+//        var handle: UIImageView?
+//        handle = UIImageView(image: image)
+//        handle!.frame = CGRect(x: self.bounds.minX, y: self.bounds.minY+2, width: 10, height: self.bounds.height-4)
+//        handle?.isOpaque = true
+//        
+//        self.addSubview(handle!)
         self.roundCorners(corners: [.topLeft,.bottomLeft], radius: 5.0)
     }
 
